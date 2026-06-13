@@ -28,61 +28,73 @@ body{
     overflow:hidden;
 }
 
-/* ===== KHUNG Ổ KHÓA ===== */
+/* ================= KHÓA ================= */
 
 .lock{
+
     position:relative;
-    width:900px;
-}
 
-.lock img{
-    width:100%;
-    display:block;
-}
-
-/* ===== VÙNG NỘI DUNG ===== */
-
-.overlay{
-    position:absolute;
-    inset:0;
+    width:700px;
+    height:700px;
 
     display:flex;
-    flex-direction:column;
-
+    justify-content:center;
     align-items:center;
-
-    /* chỉnh cả cụm lên xuống */
-    padding-top:30%;
 }
 
-/* ===== TIÊU ĐỀ ===== */
+/* Ảnh PNG có nhiều khoảng trắng nên scale lên */
+
+.lock img{
+
+    width:100%;
+
+    transform:scale(2.4);
+
+    user-select:none;
+    pointer-events:none;
+}
+
+/* ================= TIÊU ĐỀ ================= */
 
 .title{
 
+    position:absolute;
+
+    left:50%;
+    top:38%;
+
+    transform:translate(-50%,-50%);
+
     font-family:"Great Vibes",cursive;
 
-    font-size:42px;
+    font-size:58px;
 
-    color:#ea6b93;
+    color:#f07a9e;
 
     white-space:nowrap;
-
-    text-align:center;
-
-    margin-bottom:40px;
 
     text-shadow:
         0 0 10px rgba(255,255,255,.9);
 }
 
-/* ===== MẬT KHẨU ===== */
+/* ================= MẬT MÃ ================= */
 
 .code{
+
+    position:absolute;
+
+    left:50%;
+    top:54%;
+
+    transform:translate(-50%,-50%);
+
     display:flex;
-    gap:14px;
+
+    gap:18px;
 }
 
 .digit{
+
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -90,7 +102,7 @@ body{
 
 .arrow{
 
-    width:30px;
+    width:32px;
     height:20px;
 
     display:flex;
@@ -107,36 +119,38 @@ body{
 }
 
 .arrow:hover{
+
     transform:scale(1.15);
 }
 
 .value{
 
-    width:38px;
-    height:48px;
+    width:44px;
+    height:52px;
 
-    margin:3px 0;
-
-    border-radius:8px;
+    margin:4px 0;
 
     background:white;
+
+    border-radius:10px;
 
     border:1px solid #ddd;
 
     box-shadow:
-        0 2px 5px rgba(0,0,0,.08);
+        0 3px 8px rgba(0,0,0,.08);
 
     display:flex;
     justify-content:center;
     align-items:center;
 
-    font-size:26px;
+    font-size:30px;
 }
 
-/* ===== ANIMATION ===== */
+/* ================= MỞ KHÓA ================= */
 
 .unlock{
-    animation:unlock 1s forwards;
+
+    animation:unlock 1s ease forwards;
 }
 
 @keyframes unlock{
@@ -165,56 +179,54 @@ body{
 
     <img src="heart-lock.png">
 
-    <div class="overlay">
+    <div class="title">
+        The Day We Got Together
+    </div>
 
-        <div class="title">
-            The Day We Got Together
+    <div class="code">
+
+        <div class="digit">
+            <div class="arrow" onclick="change(0,1)">▲</div>
+            <div class="value" id="n0">0</div>
+            <div class="arrow" onclick="change(0,-1)">▼</div>
         </div>
 
-        <div class="code">
+        <div class="digit">
+            <div class="arrow" onclick="change(1,1)">▲</div>
+            <div class="value" id="n1">0</div>
+            <div class="arrow" onclick="change(1,-1)">▼</div>
+        </div>
 
-            <div class="digit">
-                <div class="arrow" onclick="change(0,1)">▲</div>
-                <div class="value" id="n0">0</div>
-                <div class="arrow" onclick="change(0,-1)">▼</div>
-            </div>
+        <div class="digit">
+            <div class="arrow" onclick="change(2,1)">▲</div>
+            <div class="value" id="n2">0</div>
+            <div class="arrow" onclick="change(2,-1)">▼</div>
+        </div>
 
-            <div class="digit">
-                <div class="arrow" onclick="change(1,1)">▲</div>
-                <div class="value" id="n1">0</div>
-                <div class="arrow" onclick="change(1,-1)">▼</div>
-            </div>
-
-            <div class="digit">
-                <div class="arrow" onclick="change(2,1)">▲</div>
-                <div class="value" id="n2">0</div>
-                <div class="arrow" onclick="change(2,-1)">▼</div>
-            </div>
-
-            <div class="digit">
-                <div class="arrow" onclick="change(3,1)">▲</div>
-                <div class="value" id="n3">0</div>
-                <div class="arrow" onclick="change(3,-1)">▼</div>
-            </div>
-
+        <div class="digit">
+            <div class="arrow" onclick="change(3,1)">▲</div>
+            <div class="value" id="n3">0</div>
+            <div class="arrow" onclick="change(3,-1)">▼</div>
         </div>
 
     </div>
 
 </div>
-
 <script>
 
 const PASSWORD = "1504";
 
 let digits = [0,0,0,0];
 
-function change(index, value){
+function change(index, amount){
 
-    digits[index] += value;
+    digits[index] += amount;
 
-    if(digits[index] > 9) digits[index] = 0;
-    if(digits[index] < 0) digits[index] = 9;
+    if(digits[index] > 9)
+        digits[index] = 0;
+
+    if(digits[index] < 0)
+        digits[index] = 9;
 
     document.getElementById(
         "n" + index
@@ -228,9 +240,10 @@ function checkPassword(){
     if(digits.join("") !== PASSWORD)
         return;
 
-    document
-        .getElementById("lock")
-        .classList.add("unlock");
+    const lock =
+        document.getElementById("lock");
+
+    lock.classList.add("unlock");
 
     setTimeout(() => {
 
@@ -241,6 +254,5 @@ function checkPassword(){
 }
 
 </script>
-
 </body>
 </html>
