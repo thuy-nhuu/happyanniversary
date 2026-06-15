@@ -77,18 +77,39 @@ body{
 }
 
 /* ================= TITLE ================= */
+.header{
 
-.title{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:flex-start;
+
+    margin-bottom:25px;
+}
+
+#title{
 
     color:#d7265d;
 
-    font-size:58px;
+    font-size:48px;
 
     font-weight:900;
 
-    line-height:.9;
+    line-height:1.2;
+}
 
-    margin-bottom:25px;
+#counter{
+
+    text-align:right;
+
+    color:#f0a8bc;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    line-height:1.5;
 }
 
 /* ================= CONTENT ================= */
@@ -112,7 +133,7 @@ body{
 
     font-size:21px;
 
-    line-height:1.7;
+    line-height:1.5;
 }
 
 /* ================= SCRATCH CARD ================= */
@@ -184,10 +205,17 @@ body{
 
     <div class="card">
 
-        <div class="title">
-            HAPPY 2 MONTHS<br>
-            TOGETHER
-        </div>
+        <div class="header">
+
+          <div id="title">
+              HAPPY ... TOGETHER ♡
+          </div>
+
+          <div id="counter">
+              Loading...
+          </div>
+
+      </div>
 
         <div class="content">
 
@@ -350,6 +378,44 @@ canvas.addEventListener(
     }
 );
 
+function updateLoveTime(){
+
+    const start =
+        new Date("2026-04-15T14:00:00");
+
+    const now =
+        new Date();
+
+    const diff =
+        now - start;
+
+    const seconds =
+        Math.floor(diff / 1000);
+
+    const minutes =
+        Math.floor(seconds / 60);
+
+    const hours =
+        Math.floor(minutes / 60);
+
+    const days =
+        Math.floor(hours / 24);
+
+    const months =
+        Math.floor(days / 30.44);
+
+    document.getElementById("title").innerHTML =
+    `HAPPY ${months} MONTHS<br>TOGETHER ♡`;
+
+    document.getElementById("counter").innerHTML =
+        `${days.toLocaleString()} DAYS<br>
+         ${hours.toLocaleString()} HOURS<br>
+         ${minutes.toLocaleString()} MINUTES<br>
+         ${seconds.toLocaleString()} SECONDS`;
+}
+
+updateLoveTime();
+setInterval(updateLoveTime,1000);
 </script>
 
 </body>
