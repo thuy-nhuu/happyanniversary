@@ -26,10 +26,10 @@ body{
 
     background:
     linear-gradient(
-        135deg,
-        #fff6f9,
-        #ffe7ef,
-        #ffdce7
+        180deg,
+        #fff9fb 0%,
+        #fff1f6 40%,
+        #ffe7ef 100%
     );
 
     font-family:'Patrick Hand',cursive;
@@ -103,7 +103,7 @@ body{
 
     text-align:right;
 
-    color:#f0a8bc;
+    color:#de88a2;
 
     font-size:18px;
 
@@ -129,7 +129,8 @@ body{
 
     flex:1;
 
-    color:#d76b87;
+    color:#bf5977;
+
 
     font-size:21px;
 
@@ -176,11 +177,62 @@ body{
 
     cursor:pointer;
 }
+/* ================= BONG BÓNG BAY ================= */
+.hearts{
 
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    overflow:hidden;
+}
+
+.heart{
+
+    position:absolute;
+
+    bottom:-50px;
+
+    color:#f7b6c8;
+
+    animation:float linear forwards;
+
+    opacity:.7;
+}
+
+@keyframes float{
+
+    from{
+
+        transform:
+        translateY(0)
+        scale(1);
+
+        opacity:0;
+    }
+
+    15%{
+        opacity:.7;
+    }
+
+    to{
+
+        transform:
+        translateY(-110vh)
+        translateX(
+            var(--drift)
+        )
+        scale(1.5);
+
+        opacity:0;
+    }
+}
 </style>
 </head>
 <body>
-
+<div class="hearts"></div>
 <div class="wrapper">
 
     <!-- VIỀN GỢN SÓNG -->
@@ -377,7 +429,7 @@ canvas.addEventListener(
         ctx.fill();
     }
 );
-
+/* ================= ĐẾM THỜI GIAN ================= */
 function updateLoveTime(){
 
     const start =
@@ -416,6 +468,53 @@ function updateLoveTime(){
 
 updateLoveTime();
 setInterval(updateLoveTime,1000);
+
+/* ================= BÓNG BAY ================= */
+const hearts =
+document.querySelector(".hearts");
+
+function createHeart(){
+
+    const heart =
+    document.createElement("div");
+
+    heart.className =
+    "heart";
+
+    heart.innerHTML =
+    "♡";
+
+    heart.style.left =
+    Math.random()*100 + "vw";
+
+    heart.style.fontSize =
+    (12 + Math.random()*24)
+    + "px";
+
+    heart.style.animationDuration =
+    (6 + Math.random()*6)
+    + "s";
+
+    heart.style.setProperty(
+        "--drift",
+        (-50 + Math.random()*100)
+        + "px"
+    );
+
+    hearts.appendChild(
+        heart
+    );
+
+    setTimeout(
+        ()=>heart.remove(),
+        12000
+    );
+}
+
+setInterval(
+    createHeart,
+    500
+);
 </script>
 
 </body>
